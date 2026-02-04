@@ -10,7 +10,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -18,28 +17,44 @@ func numberOfBytes(fileName string) int64 {
 	openedFile, err := os.Stat(fileName)
 
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("failed to open file")
+		os.Exit(1)
 
 	}
 	return openedFile.Size()
 
 }
 
+func numberOfLines(fileName string) string {
+	return fileName
+
+}
+
 func main() {
 	byteCmd := flag.Bool("b", false, "print file byte number")
-	// lineCmd := flag.Bool("l", false, "return number of lines in a file")
+	lineCmd := flag.Bool("l", false, "return number of lines in a file")
 	// numberCmd := flag.Bool("w", false, "return number of words in a file")
 	// charCmd := flag.Bool("m", false, "return number of chars in a file")
 
 	flag.Parse()
-	fileNames := flag.Args()
+	fileName := flag.Args()
 
-	// if len(os.Args[1:]) < 1 {
-	// 	fmt.Println("no flag entered")
-	// 	os.Exit(1)
-	// }
+	// Make sure there is atleast one (the file argument) passed
+	if len(os.Args[1:]) < 1 {
+		fmt.Println("Please pass an argument")
+		os.Exit(1)
+	}
+
+	if len(fileName) < 1 {
+		fmt.Println("Please enter a file")
+		os.Exit(1)
+	}
 
 	if *byteCmd {
-		fmt.Println(numberOfBytes(fileNames[0]))
+		fmt.Println(numberOfBytes(fileName[0]))
+	}
+
+	if *lineCmd {
+		fmt.Println(numberOfLines(fileName[0]))
 	}
 }
