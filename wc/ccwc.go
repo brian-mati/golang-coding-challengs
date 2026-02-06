@@ -67,11 +67,11 @@ func numberOfWords(fileName string) int {
 func main() {
 	byteCmd := flag.Bool("b", false, "print file byte number")
 	lineCmd := flag.Bool("l", false, "return number of lines in a file")
-	// numberCmd := flag.Bool("w", false, "return number of words in a file")
+	numberCmd := flag.Bool("w", false, "return number of words in a file")
 	// charCmd := flag.Bool("m", false, "return number of chars in a file")
 
 	flag.Parse()
-	fileName := flag.Args()
+	fileName := flag.Args() //Checks for the last argument and assigns that as the file name
 
 	// Make sure there is atleast one (the file argument) passed
 	if len(os.Args[1:]) < 1 {
@@ -90,5 +90,9 @@ func main() {
 
 	if *lineCmd {
 		fmt.Println(numberOfLines(fileName[0]))
+	}
+
+	if *numberCmd {
+		fmt.Println(numberOfWords(fileName[0]))
 	}
 }
