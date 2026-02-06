@@ -64,6 +64,13 @@ func numberOfWords(fileName string) int {
 	return numberOfWords
 }
 
+func numberOfWords(fileName string) int {
+
+	var numberOfWords int
+
+	return numberOfWords
+}
+
 func main() {
 	byteCmd := flag.Bool("b", false, "print file byte number")
 	lineCmd := flag.Bool("l", false, "return number of lines in a file")
@@ -93,6 +100,6 @@ func main() {
 	}
 
 	if *numberCmd {
-		fmt.Println(numberOfWords(fileName[0]))
+		fmt.Println(numberOfWords(fileName[0]), fileName[0])
 	}
 }
