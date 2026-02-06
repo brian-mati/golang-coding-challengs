@@ -13,6 +13,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"unicode"
 )
 
 func numberOfBytes(fileName string) int64 {
@@ -41,6 +42,26 @@ func numberOfLines(fileName string) int {
 	}
 
 	return numberOfLines
+}
+
+func numberOfWords(fileName string) int {
+
+	fileData, err := os.ReadFile(fileName)
+	var numberOfWords int
+
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+
+	for _, v := range string(fileData) {
+		if unicode.IsSpace(v) {
+			numberOfWords++
+		}
+
+	}
+
+	return numberOfWords
 }
 
 func main() {
