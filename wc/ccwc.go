@@ -10,14 +10,16 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
+	"strings"
 )
 
 func numberOfBytes(fileName string) int64 {
 	openedFile, err := os.Stat(fileName)
 
 	if err != nil {
-		fmt.Println("failed to open file")
+		log.Fatal(err)
 		os.Exit(1)
 
 	}
@@ -25,9 +27,20 @@ func numberOfBytes(fileName string) int64 {
 
 }
 
-func numberOfLines(fileName string) string {
-	return fileName
+func numberOfLines(fileName string) int {
+	fileData, err := os.ReadFile(fileName)
+	var numberOfLines int = 0
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
 
+	lines := strings.Split(string(fileData), "\n")
+
+	for numberOfLines = range lines {
+	}
+
+	return numberOfLines
 }
 
 func main() {
