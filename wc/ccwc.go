@@ -64,18 +64,26 @@ func numberOfWords(fileName string) int {
 	return numberOfWords
 }
 
-func numberOfWords(fileName string) int {
+func numberOfChars(fileName string) int {
+	fileData, err := os.ReadFile(fileName)
+	var numberOfChars int
 
-	var numberOfWords int
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+	for range string(fileData) {
+		numberOfChars++ // chars inclusive of end of line and white
+	}
 
-	return numberOfWords
+	return numberOfChars
 }
 
 func main() {
 	byteCmd := flag.Bool("b", false, "print file byte number")
 	lineCmd := flag.Bool("l", false, "return number of lines in a file")
 	numberCmd := flag.Bool("w", false, "return number of words in a file")
-	// charCmd := flag.Bool("m", false, "return number of chars in a file")
+	charCmd := flag.Bool("m", false, "return number of chars in a file")
 
 	flag.Parse()
 	fileName := flag.Args() //Checks for the last argument and assigns that as the file name
@@ -101,5 +109,9 @@ func main() {
 
 	if *numberCmd {
 		fmt.Println(numberOfWords(fileName[0]), fileName[0])
+	}
+
+	if *charCmd {
+		fmt.Println(numberOfChars(fileName[0]))
 	}
 }
