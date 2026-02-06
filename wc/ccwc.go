@@ -13,7 +13,6 @@ import (
 	"log"
 	"os"
 	"strings"
-	"unicode"
 )
 
 func numberOfBytes(fileName string) int64 {
@@ -54,13 +53,12 @@ func numberOfWords(fileName string) int {
 		os.Exit(1)
 	}
 
-	for _, v := range string(fileData) {
-		if unicode.IsSpace(v) {
-			numberOfWords++
+	for i := range fileData {
+		if fileData[i] == 32 || fileData[i] == 10 || fileData[i] == 42 { //Check the ascii char
+			continue
 		}
-
+		numberOfWords++
 	}
-
 	return numberOfWords
 }
 
@@ -79,6 +77,11 @@ func numberOfChars(fileName string) int {
 	return numberOfChars
 }
 
+func runAllFlags(fileName string) (int64, int, int, int) {
+	return numberOfBytes(fileName), numberOfLines(fileName), numberOfWords(fileName), numberOfChars(fileName)
+
+}
+
 func main() {
 	byteCmd := flag.Bool("b", false, "print file byte number")
 	lineCmd := flag.Bool("l", false, "return number of lines in a file")
@@ -89,29 +92,30 @@ func main() {
 	fileName := flag.Args() //Checks for the last argument and assigns that as the file name
 
 	// Make sure there is atleast one (the file argument) passed
-	if len(os.Args[1:]) < 1 {
-		fmt.Println("Please pass an argument")
-		os.Exit(1)
-	}
-
 	if len(fileName) < 1 {
 		fmt.Println("Please enter a file")
 		os.Exit(1)
 	}
 
-	if *byteCmd {
-		fmt.Println(numberOfBytes(fileName[0]))
+	if len(os.Args[1:]) > 2 {
+		if *byteCmd {
+			fmt.Println(numberOfBytes(fileName[0]), fileName[0])
+		}
+
+		if *lineCmd {
+			fmt.Println(numberOfLines(fileName[0]), fileName[0])
+		}
+
+		if *numberCmd {
+			fmt.Println(numberOfWords(fileName[0]), fileName[0])
+		}
+
+		if *charCmd {
+			fmt.Println(numberOfChars(fileName[0]), fileName[0])
+		}
+
+	} else {
+		fmt.Println(runAllFlags(fileName[0]))
 	}
 
-	if *lineCmd {
-		fmt.Println(numberOfLines(fileName[0]))
-	}
-
-	if *numberCmd {
-		fmt.Println(numberOfWords(fileName[0]), fileName[0])
-	}
-
-	if *charCmd {
-		fmt.Println(numberOfChars(fileName[0]))
-	}
 }
