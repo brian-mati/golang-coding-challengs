@@ -43,6 +43,7 @@ func numberOfLines(fileName string) int {
 	return numberOfLines
 }
 
+// TOO:FIX = Not accurate to the wc linux util
 func numberOfWords(fileName string) int {
 
 	fileData, err := os.ReadFile(fileName)
@@ -78,6 +79,7 @@ func numberOfChars(fileName string) int {
 }
 
 func runAllFlags(fileName string) (int64, int, int, int) {
+	fmt.Printf("--bytes=%d --lines=%d  --words=%d --chars=%d \n", numberOfBytes(fileName), numberOfLines(fileName), numberOfWords(fileName), numberOfChars(fileName))
 	return numberOfBytes(fileName), numberOfLines(fileName), numberOfWords(fileName), numberOfChars(fileName)
 
 }
@@ -97,25 +99,25 @@ func main() {
 		os.Exit(1)
 	}
 
-	if len(os.Args[1:]) > 2 {
+	if len(os.Args[1:]) >= 2 {
 		if *byteCmd {
-			fmt.Println(numberOfBytes(fileName[0]), fileName[0])
+			fmt.Printf("--bytes=%d\n", numberOfBytes(fileName[0]))
 		}
 
 		if *lineCmd {
-			fmt.Println(numberOfLines(fileName[0]), fileName[0])
+			fmt.Printf("--lines=%d\n", numberOfLines(fileName[0]))
 		}
 
 		if *numberCmd {
-			fmt.Println(numberOfWords(fileName[0]), fileName[0])
+			fmt.Printf("--words=%d\n", numberOfWords(fileName[0]))
 		}
 
 		if *charCmd {
-			fmt.Println(numberOfChars(fileName[0]), fileName[0])
+			fmt.Printf("--chars=%d\n", numberOfChars(fileName[0]))
 		}
 
 	} else {
-		fmt.Println(runAllFlags(fileName[0]))
+		runAllFlags(fileName[0])
 	}
 
 }
