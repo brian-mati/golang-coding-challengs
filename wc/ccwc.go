@@ -55,7 +55,7 @@ func numberOfWords(fileName string) int {
 	}
 
 	for i := range fileData {
-		if fileData[i] == 32 || fileData[i] == 10 || fileData[i] == 42 { //Check the ascii char
+		if fileData[i] == 32 || fileData[i] == 10 || fileData[i] == 42 { //Check the ascii char (Ignore spaces, end of line terminaiton chars and end of file chars)
 			continue
 		}
 		numberOfWords++
